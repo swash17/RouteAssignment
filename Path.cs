@@ -11,11 +11,6 @@ namespace SwashSim_RouteAssign
         private FloydGraph graph;
         private ushort[] idToindex;
         private uint[,] linkId;
-
-        public void testmethod()
-        {
-
-        }
         
         public Path(List<LinkData> _Link, List<NodeData> _Node)
         {                      
