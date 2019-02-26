@@ -13,12 +13,13 @@ namespace SwashSim_RouteAssign
         private uint[,] linkId;
         
         public Path()
-        {                      
+        {
             
         }
 
         public void CalcUEassignment(List<LinkData> links, List<NodeData> nodes)
         {
+            CreteUserEquilibriumNetwork(links,nodes);
             UInt16 size = (ushort)nodes.Count;
             float[,] matrix = new float[size, size];
             linkId = new uint[size, size];
@@ -52,6 +53,10 @@ namespace SwashSim_RouteAssign
 
         }
 
+        public void CreteUserEquilibriumNetwork(List<LinkData> links, List<NodeData> nodes)
+        {
+
+        }
 
         public void PathGeneration(EntryNode _Origin, ExitNode _Destination, UInt16 _Type, ref List<ushort> _NodesIndex, ref List<uint> _LinksID, ref float _Dis)
         {
