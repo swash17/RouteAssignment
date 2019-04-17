@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using SwashSim_Network;
-
+using XXE_Calculations;
 
 
 namespace SwashSim_RouteAssign
@@ -14,12 +14,28 @@ namespace SwashSim_RouteAssign
         
         public Path()
         {
-            
+            double test = 1;
         }
 
-        public void CalcUEassignment(List<LinkData> links, List<NodeData> nodes)
+       
+        
+        public void CalcUEassignment(List<LinkData> SwashSimLinks, List<NodeData> SwashSimNodes)
         {
-            CreteUserEquilibriumNetwork(links,nodes);
+            Network UEnetwork = new Network();
+            UEnetwork.SpecifyUserEquilibriumNetworkInput(SwashSimLinks, SwashSimNodes);
+
+            //Call XXE to perform User Equilibrium Traffic Assignment
+            int tp = 1;
+            int dInfo = 1;
+            XXE_DataStructures.ProjectData project = new XXE_DataStructures.ProjectData();
+            project.Type = XXE_DataStructures.ProjectType.BPRlinks;
+            Calculations.UserEquilibrium(tp, dInfo, project, network, links, OD);
+            //Get one set of feasible path flow under UE condition
+            List<XXE_DataStructures.PathData> PathFlowResults = Calculations.GetPathResults();
+        }
+
+        public void OldCode(List<LinkData> links, List<NodeData> nodes)
+        {
             UInt16 size = (ushort)nodes.Count;
             float[,] matrix = new float[size, size];
             linkId = new uint[size, size];
@@ -50,12 +66,6 @@ namespace SwashSim_RouteAssign
                 linkId[idToindex[l.NodeIdUp], idToindex[l.NodeIdDown]] = l.Id;
             }
             graph = new FloydGraph(size, matrix);
-
-        }
-
-        public void CreteUserEquilibriumNetwork(List<LinkData> links, List<NodeData> nodes)
-        {
-
         }
 
         public void PathGeneration(EntryNode _Origin, ExitNode _Destination, UInt16 _Type, ref List<ushort> _NodesIndex, ref List<uint> _LinksID, ref float _Dis)
