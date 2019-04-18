@@ -16,22 +16,31 @@ namespace SwashSim_RouteAssign
         {
             double test = 1;
         }
-
-       
         
         public void CalcUEassignment(List<LinkData> SwashSimLinks, List<NodeData> SwashSimNodes)
         {
             Network UEnetwork = new Network();
-            UEnetwork.SpecifyUserEquilibriumNetworkInput(SwashSimLinks, SwashSimNodes);
+            XXE_DataStructures.NetworkData networkXXE = new XXE_DataStructures.NetworkData();
+            List<XXE_DataStructures.LinkData> linksXXE = new List<XXE_DataStructures.LinkData>();
+            List<XXE_DataStructures.ODdata> ODXXE = new List<XXE_DataStructures.ODdata>();
+            UEnetwork.SpecifyUserEquilibriumNetworkInput(SwashSimLinks, SwashSimNodes, networkXXE, linksXXE,ODXXE);
 
             //Call XXE to perform User Equilibrium Traffic Assignment
-            int tp = 1;
-            int dInfo = 1;
             XXE_DataStructures.ProjectData project = new XXE_DataStructures.ProjectData();
             project.Type = XXE_DataStructures.ProjectType.BPRlinks;
-            Calculations.UserEquilibrium(tp, dInfo, project, network, links, OD);
-            //Get one set of feasible path flow under UE condition
+            List<HCMCalc_Definitions.FreewayData> freewayFacilities = new List<HCMCalc_Definitions.FreewayData>();
+            List<XXE_DataStructures.UserEquilibriumTimePeriodResult> resultsUE = new List<XXE_DataStructures.UserEquilibriumTimePeriodResult>();
+            List<List<List<double>>> rampProportionList = new List<List<List<double>>>();
+            Calculations.RunControl(project, networkXXE, linksXXE, freewayFacilities, ODXXE, resultsUE, rampProportionList);
+            //Get one set of feasible path flow results
             List<XXE_DataStructures.PathData> PathFlowResults = Calculations.GetPathResults();
+            DisplayPathFlowDataGridView(PathFlowResults);
+        }
+
+        private void DisplayPathFlowDataGridView(List<XXE_DataStructures.PathData> PathFlowResults)
+        {
+            UserEquilibriumResults myUEresultsForm = new UserEquilibriumResults(PathFlowResults);
+            myUEresultsForm.Show();
         }
 
         public void OldCode(List<LinkData> links, List<NodeData> nodes)
