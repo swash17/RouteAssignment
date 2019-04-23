@@ -9,25 +9,17 @@ namespace SwashSim_RouteAssign
 {
     public class Network
     {
+        List<List<int>> UEnetworkPathList = new List<List<int>>();
+        List<List<int>> SwashSimPathLists = new List<List<int>>();
+
         public void SpecifyUserEquilibriumNetworkInput(List<LinkData> SwashSimLinks, List<NodeData> SwashSimNodes,XXE_DataStructures.NetworkData networkXXE, List<XXE_DataStructures.LinkData> linksXXE, List<XXE_DataStructures.ODdata> ODXXE)
         {
             NetworkSetup(networkXXE);
             LinksSetup(linksXXE);
             ODdemandSetup(ODXXE);
+            PathsSetup();
         }
 
-        private void NetworkSetup(XXE_DataStructures.NetworkData network)
-        {          
-            network.ConvCrit = 0.0005;
-            network.MaxIterations = 100;
-            network.FirstNetworkNode = 9;
-            network.NumNodes = 12;
-            network.NumZones = 4;
-            network.NumODrecords = 12;
-            network.NumTimePeriods = 1;
-            network.TotalLinks = 20;
-            network.TimePeriodType = XXE_DataStructures.TimePeriod.Single;
-        }
 
         public int DetermineEntryNode(int OrigZone)
         {
@@ -49,41 +41,48 @@ namespace SwashSim_RouteAssign
             }
             return EntryNodeSwashSim;
         }
+
         public List<int> DeterminePathNodes(List<int> PathNodes)
         {
-            //UE network path nodes
-            List<int> Path1 = new List<int> { 1, 2, 3, 4, 5, 6, 7 };
-            List<int> Path2 = new List<int> { 1, 2, 3, 4, 5, 6, 7 };
-            List<int> Path3 = new List<int> { 1, 2, 3, 4, 5, 6, 7 };
-            List<int> Path4 = new List<int> { 1, 2, 3, 4, 5, 6, 7 };
-            List<int> Path5 = new List<int> { 1, 2, 3, 4, 5, 6, 7 };
-            List<int> Path6 = new List<int> { 1, 2, 3, 4, 5, 6, 7 };
-            List<int> Path7 = new List<int> { 1, 2, 3, 4, 5, 6, 7 };
-            List<int> Path8 = new List<int> { 1, 2, 3, 4, 5, 6, 7 };
-            List<int> Path9 = new List<int> { 1, 2, 3, 4, 5, 6, 7 };
-            List<int> Path10 = new List<int> { 1, 2, 3, 4, 5, 6, 7 };
-            List<int> Path11 = new List<int> { 1, 2, 3, 4, 5, 6, 7 };
-            List<int> Path12 = new List<int> { 1, 2, 3, 4, 5, 6, 7 };
-            List<int> Path13 = new List<int> { 1, 2, 3, 4, 5, 6, 7 };
-            List<int> Path14 = new List<int> { 1, 2, 3, 4, 5, 6, 7 };
-            List<int> Path15 = new List<int> { 1, 2, 3, 4, 5, 6, 7 };
-            List<int> Path16 = new List<int> { 1, 2, 3, 4, 5, 6, 7 };
-            List<int> Path17 = new List<int> { 1, 2, 3, 4, 5, 6, 7 };
-            List<int> Path18 = new List<int> { 1, 2, 3, 4, 5, 6, 7 };
-            List<int> Path19 = new List<int> { 1, 2, 3, 4, 5, 6, 7 };
-            List<int> Path20 = new List<int> { 1, 2, 3, 4, 5, 6, 7 };
-            List<int> Path21 = new List<int> { 1, 2, 3, 4, 5, 6, 7 };
-            List<int> Path22 = new List<int> { 1, 2, 3, 4, 5, 6, 7 };
-            List<int> Path23 = new List<int> { 1, 2, 3, 4, 5, 6, 7 };
-            List<int> Path24 = new List<int> { 1, 2, 3, 4, 5, 6, 7 };
-
             List<int> PathNodesSwashSim = new List<int>();
-
+            bool match = false;
+            for(int pathID =0; pathID < UEnetworkPathList.Count; pathID++)
+            {
+                for(int i = 0; i<PathNodes.Count;i++)
+                {
+                    if(PathNodes[i] != UEnetworkPathList[pathID][i])
+                    {
+                        match = false;
+                        break;
+                    }
+                    match = true;
+                }
+                if(match == true)
+                {
+                    PathNodesSwashSim = SwashSimPathLists[pathID];
+                    break;
+                }
+            }
             return PathNodesSwashSim;
+        }
+
+        private void NetworkSetup(XXE_DataStructures.NetworkData network)
+        {
+            //XXE network input
+            network.ConvCrit = 0.0005;
+            network.MaxIterations = 100;
+            network.FirstNetworkNode = 9;
+            network.NumNodes = 12;
+            network.NumZones = 4;
+            network.NumODrecords = 12;
+            network.NumTimePeriods = 1;
+            network.TotalLinks = 20;
+            network.TimePeriodType = XXE_DataStructures.TimePeriod.Single;
         }
 
         private void LinksSetup(List<XXE_DataStructures.LinkData> links)
         {       
+            //UE links input for XXE
             links.Add(new XXE_DataStructures.LinkData());
             links.Add(new XXE_DataStructures.LinkData(1, 9, 0.5, 0,1000, 40,"1", false));            
             links.Add(new XXE_DataStructures.LinkData(2, 10, 0.5, 0, 1000, 40, "2", false));
@@ -114,6 +113,7 @@ namespace SwashSim_RouteAssign
 
         private void ODdemandSetup(List<XXE_DataStructures.ODdata> OD)
         {
+            //OD demand input for XXE
             OD.Add(new XXE_DataStructures.ODdata());
             OD.Add(new XXE_DataStructures.ODdata(1, 2, 1000, 1000));
             OD.Add(new XXE_DataStructures.ODdata(1, 3, 1000, 1000));
@@ -129,5 +129,59 @@ namespace SwashSim_RouteAssign
             OD.Add(new XXE_DataStructures.ODdata(4, 3, 1000, 1000));
         }
 
+        private void PathsSetup()
+        {
+            //UE network paths
+            UEnetworkPathList.Add(new List<int> { 9, 10 });
+            UEnetworkPathList.Add(new List<int> { 9, 11, 12, 10 });
+            UEnetworkPathList.Add(new List<int> { 9, 11 });
+            UEnetworkPathList.Add(new List<int> { 9, 10, 12, 11 });
+            UEnetworkPathList.Add(new List<int> { 9, 10, 12 });
+            UEnetworkPathList.Add(new List<int> { 9, 11, 12 });
+            UEnetworkPathList.Add(new List<int> { 10, 9 });
+            UEnetworkPathList.Add(new List<int> { 10, 12, 11, 9 });
+            UEnetworkPathList.Add(new List<int> { 10, 12, 11 });
+            UEnetworkPathList.Add(new List<int> { 10, 9, 11 });
+            UEnetworkPathList.Add(new List<int> { 10, 12 });
+            UEnetworkPathList.Add(new List<int> { 10, 9, 11, 12 });
+            UEnetworkPathList.Add(new List<int> { 11, 9 });
+            UEnetworkPathList.Add(new List<int> { 11, 12, 10, 9 });
+            UEnetworkPathList.Add(new List<int> { 11, 12, 10 });
+            UEnetworkPathList.Add(new List<int> { 11, 9, 10 });
+            UEnetworkPathList.Add(new List<int> { 11, 12 });
+            UEnetworkPathList.Add(new List<int> { 11, 9, 10, 12 });
+            UEnetworkPathList.Add(new List<int> { 12, 11, 9 });
+            UEnetworkPathList.Add(new List<int> { 12, 10, 9 });
+            UEnetworkPathList.Add(new List<int> { 12, 10 });
+            UEnetworkPathList.Add(new List<int> { 12, 11, 9, 10 });
+            UEnetworkPathList.Add(new List<int> { 12, 11 });
+            UEnetworkPathList.Add(new List<int> { 12, 10, 9, 11 });
+
+            //SwashSim network paths
+            SwashSimPathLists.Add(new List<int> { 8, 7, 4, 16, 13, 12, 802 });
+            SwashSimPathLists.Add(new List<int> { 8, 7, 6, 27, 30, 24, 19, 14, 13, 12, 802 });
+            SwashSimPathLists.Add(new List<int> { 8, 7, 6, 27, 26, 25, 804 });
+            SwashSimPathLists.Add(new List<int> { 8, 7, 4, 16, 15, 18, 17, 29, 26, 25, 804 });
+            SwashSimPathLists.Add(new List<int> { 8, 7, 4, 16, 15, 18, 23, 22, 803 });
+            SwashSimPathLists.Add(new List<int> { 8, 7, 6, 27, 30, 24, 23, 22, 803 });
+            SwashSimPathLists.Add(new List<int> { 11, 10, 9, 3, 2, 1, 801 });
+            SwashSimPathLists.Add(new List<int> { 11, 10, 15, 18, 17, 29, 28, 5, 2, 1, 801 });
+            SwashSimPathLists.Add(new List<int> { 11, 10, 15, 18, 17, 29, 26, 25, 804 });
+            SwashSimPathLists.Add(new List<int> { 11, 10, 9, 3, 6, 27, 26, 25, 804 });
+            SwashSimPathLists.Add(new List<int> { 11, 10, 15, 18, 23, 22, 803 });
+            SwashSimPathLists.Add(new List<int> { 11, 10, 9, 3, 6, 27, 30, 24, 23, 22, 803 });
+            SwashSimPathLists.Add(new List<int> { 32, 31, 28, 5, 2, 1, 801 });
+            SwashSimPathLists.Add(new List<int> { 32, 31, 30, 24, 19, 14, 9, 3, 2, 1, 801 });
+            SwashSimPathLists.Add(new List<int> { 32, 31, 30, 24, 19, 14, 13, 12, 802 });
+            SwashSimPathLists.Add(new List<int> { 32, 31, 28, 5, 4, 16, 13, 12, 802 });
+            SwashSimPathLists.Add(new List<int> { 32, 31, 30, 24, 23, 22, 803 });
+            SwashSimPathLists.Add(new List<int> { 32, 31, 28, 5, 4, 16, 15, 18, 23, 22, 803 });
+            SwashSimPathLists.Add(new List<int> { 21, 20, 17, 29, 28, 5, 2, 1, 801 });
+            SwashSimPathLists.Add(new List<int> { 21, 20, 19, 14, 9, 3, 2, 1, 801 });
+            SwashSimPathLists.Add(new List<int> { 21, 20, 19, 14, 13, 12, 802 });
+            SwashSimPathLists.Add(new List<int> { 21, 20, 17, 29, 28, 5, 4, 16, 13, 12, 802 });
+            SwashSimPathLists.Add(new List<int> { 21, 20, 17, 29, 26, 25, 804 });
+            SwashSimPathLists.Add(new List<int> { 21, 20, 19, 14, 9, 3, 6, 27, 26, 25, 804 });
+        }
     }
 }

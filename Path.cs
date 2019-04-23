@@ -12,7 +12,6 @@ namespace SwashSim_RouteAssign
         private FloydGraph graph;
         private ushort[] idToindex;
         private uint[,] linkId;
-
         Network UEnetwork = new Network();
 
         public Path()
@@ -49,17 +48,25 @@ namespace SwashSim_RouteAssign
             for (int path = 0; path < PathFlowResults.Count; path++)
             {
                 PathAssignmentObject = new object[3];
-                PathAssignmentObject[0] = UEnetwork.DetermineEntryNode(PathFlowResults[path].OrigZone);
-                PathAssignmentObject[1] = UEnetwork.DeterminePathNodes(PathFlowResults[path].Nodes);
-                PathAssignmentObject[2] = CalculatePathProbability(PathFlowResults[path].OrigZone, PathFlowResults[path].Nodes);
+                PathAssignmentObject[0] = UEnetwork.DetermineEntryNode(PathFlowResults[path].OrigZone); //entry node
+                PathAssignmentObject[1] = UEnetwork.DeterminePathNodes(PathFlowResults[path].Nodes); //path nodes
+                PathAssignmentObject[2] = CalculatePathProbability(path, PathFlowResults); //path probability
                 PathAssignmentObjectList.Add(PathAssignmentObject);
             }
         }
 
-        private double CalculatePathProbability(int origZone, List<int> pathNodes)
+        private double CalculatePathProbability(int pathID,  List<XXE_DataStructures.PathData> PathFlowResults)
         {
             double PathProb = new double();
-
+            double OrigZoneTotalVolume = 0;
+            foreach(XXE_DataStructures.PathData pathResult in PathFlowResults)
+            {
+                if(pathResult.OrigZone == PathFlowResults[pathID].OrigZone)
+                {
+                    OrigZoneTotalVolume += pathResult.Volume;
+                }
+            }
+            PathProb = Math.Round(PathFlowResults[pathID].Volume / OrigZoneTotalVolume,2);
             return PathProb;
         }
            
