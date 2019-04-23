@@ -29,6 +29,59 @@ namespace SwashSim_RouteAssign
             network.TimePeriodType = XXE_DataStructures.TimePeriod.Single;
         }
 
+        public int DetermineEntryNode(int OrigZone)
+        {
+            int EntryNodeSwashSim = 0;
+            switch (OrigZone)
+            {
+                case 1:
+                    EntryNodeSwashSim = 701;
+                    break;
+                case 2:
+                    EntryNodeSwashSim = 702;
+                    break;
+                case 3:
+                    EntryNodeSwashSim = 704;
+                    break;
+                case 4:
+                    EntryNodeSwashSim = 703;
+                    break;
+            }
+            return EntryNodeSwashSim;
+        }
+        public List<int> DeterminePathNodes(List<int> PathNodes)
+        {
+            //UE network path nodes
+            List<int> Path1 = new List<int> { 1, 2, 3, 4, 5, 6, 7 };
+            List<int> Path2 = new List<int> { 1, 2, 3, 4, 5, 6, 7 };
+            List<int> Path3 = new List<int> { 1, 2, 3, 4, 5, 6, 7 };
+            List<int> Path4 = new List<int> { 1, 2, 3, 4, 5, 6, 7 };
+            List<int> Path5 = new List<int> { 1, 2, 3, 4, 5, 6, 7 };
+            List<int> Path6 = new List<int> { 1, 2, 3, 4, 5, 6, 7 };
+            List<int> Path7 = new List<int> { 1, 2, 3, 4, 5, 6, 7 };
+            List<int> Path8 = new List<int> { 1, 2, 3, 4, 5, 6, 7 };
+            List<int> Path9 = new List<int> { 1, 2, 3, 4, 5, 6, 7 };
+            List<int> Path10 = new List<int> { 1, 2, 3, 4, 5, 6, 7 };
+            List<int> Path11 = new List<int> { 1, 2, 3, 4, 5, 6, 7 };
+            List<int> Path12 = new List<int> { 1, 2, 3, 4, 5, 6, 7 };
+            List<int> Path13 = new List<int> { 1, 2, 3, 4, 5, 6, 7 };
+            List<int> Path14 = new List<int> { 1, 2, 3, 4, 5, 6, 7 };
+            List<int> Path15 = new List<int> { 1, 2, 3, 4, 5, 6, 7 };
+            List<int> Path16 = new List<int> { 1, 2, 3, 4, 5, 6, 7 };
+            List<int> Path17 = new List<int> { 1, 2, 3, 4, 5, 6, 7 };
+            List<int> Path18 = new List<int> { 1, 2, 3, 4, 5, 6, 7 };
+            List<int> Path19 = new List<int> { 1, 2, 3, 4, 5, 6, 7 };
+            List<int> Path20 = new List<int> { 1, 2, 3, 4, 5, 6, 7 };
+            List<int> Path21 = new List<int> { 1, 2, 3, 4, 5, 6, 7 };
+            List<int> Path22 = new List<int> { 1, 2, 3, 4, 5, 6, 7 };
+            List<int> Path23 = new List<int> { 1, 2, 3, 4, 5, 6, 7 };
+            List<int> Path24 = new List<int> { 1, 2, 3, 4, 5, 6, 7 };
+
+            List<int> PathNodesSwashSim = new List<int>();
+
+            return PathNodesSwashSim;
+        }
+
         private void LinksSetup(List<XXE_DataStructures.LinkData> links)
         {       
             links.Add(new XXE_DataStructures.LinkData());

@@ -6,12 +6,15 @@ using XXE_Calculations;
 
 namespace SwashSim_RouteAssign
 {
+
     public class Path
     {
         private FloydGraph graph;
         private ushort[] idToindex;
         private uint[,] linkId;
-        
+
+        Network UEnetwork = new Network();
+
         public Path()
         {
             double test = 1;
@@ -19,7 +22,7 @@ namespace SwashSim_RouteAssign
         
         public void CalcUEassignment(List<LinkData> SwashSimLinks, List<NodeData> SwashSimNodes)
         {
-            Network UEnetwork = new Network();
+            
             XXE_DataStructures.NetworkData networkXXE = new XXE_DataStructures.NetworkData();
             List<XXE_DataStructures.LinkData> linksXXE = new List<XXE_DataStructures.LinkData>();
             List<XXE_DataStructures.ODdata> ODXXE = new List<XXE_DataStructures.ODdata>();
@@ -34,14 +37,40 @@ namespace SwashSim_RouteAssign
             Calculations.RunControl(project, networkXXE, linksXXE, freewayFacilities, ODXXE, resultsUE, rampProportionList);
             //Get one set of feasible path flow results
             List<XXE_DataStructures.PathData> PathFlowResults = Calculations.GetPathResults();
+
             DisplayPathFlowDataGridView(PathFlowResults);
         }
+
+        private void PathAssignmentOutputForSwashSim(List<XXE_DataStructures.PathData> PathFlowResults)
+        {
+
+            List<object[]> PathAssignmentObjectList = new List<object[]>();
+            object[] PathAssignmentObject;
+            for (int path = 0; path < PathFlowResults.Count; path++)
+            {
+                PathAssignmentObject = new object[3];
+                PathAssignmentObject[0] = UEnetwork.DetermineEntryNode(PathFlowResults[path].OrigZone);
+                PathAssignmentObject[1] = UEnetwork.DeterminePathNodes(PathFlowResults[path].Nodes);
+                PathAssignmentObject[2] = CalculatePathProbability(PathFlowResults[path].OrigZone, PathFlowResults[path].Nodes);
+                PathAssignmentObjectList.Add(PathAssignmentObject);
+            }
+        }
+
+        private double CalculatePathProbability(int origZone, List<int> pathNodes)
+        {
+            double PathProb = new double();
+
+            return PathProb;
+        }
+           
 
         private void DisplayPathFlowDataGridView(List<XXE_DataStructures.PathData> PathFlowResults)
         {
             UserEquilibriumResults myUEresultsForm = new UserEquilibriumResults(PathFlowResults);
             myUEresultsForm.Show();
         }
+
+
 
         public void OldCode(List<LinkData> links, List<NodeData> nodes)
         {
