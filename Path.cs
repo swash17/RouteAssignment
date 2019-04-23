@@ -19,9 +19,9 @@ namespace SwashSim_RouteAssign
             double test = 1;
         }
         
-        public void CalcUEassignment(List<LinkData> SwashSimLinks, List<NodeData> SwashSimNodes)
+        public List<object[]> CalcUEassignment(List<LinkData> SwashSimLinks, List<NodeData> SwashSimNodes)
         {
-            
+            List<object[]> PathAssignmentObjectListForSwashSim = new List<object[]>();
             XXE_DataStructures.NetworkData networkXXE = new XXE_DataStructures.NetworkData();
             List<XXE_DataStructures.LinkData> linksXXE = new List<XXE_DataStructures.LinkData>();
             List<XXE_DataStructures.ODdata> ODXXE = new List<XXE_DataStructures.ODdata>();
@@ -36,12 +36,13 @@ namespace SwashSim_RouteAssign
             Calculations.RunControl(project, networkXXE, linksXXE, freewayFacilities, ODXXE, resultsUE, rampProportionList);
             //Get one set of feasible path flow results
             List<XXE_DataStructures.PathData> PathFlowResults = Calculations.GetPathResults();
-
+            //Return path assignment results to SwashSim
+            PathAssignmentObjectListForSwashSim = PathAssignmentOutputForSwashSim(PathFlowResults);
+            return PathAssignmentObjectListForSwashSim;
         }
 
-        private void PathAssignmentOutputForSwashSim(List<XXE_DataStructures.PathData> PathFlowResults)
+        private List<object[]> PathAssignmentOutputForSwashSim(List<XXE_DataStructures.PathData> PathFlowResults)
         {
-
             List<object[]> PathAssignmentObjectList = new List<object[]>();
             object[] PathAssignmentObject;
             for (int path = 0; path < PathFlowResults.Count; path++)
@@ -52,6 +53,7 @@ namespace SwashSim_RouteAssign
                 PathAssignmentObject[2] = CalculatePathProbability(path, PathFlowResults); //path probability
                 PathAssignmentObjectList.Add(PathAssignmentObject);
             }
+            return PathAssignmentObjectList;
         }
 
         private double CalculatePathProbability(int pathID,  List<XXE_DataStructures.PathData> PathFlowResults)
