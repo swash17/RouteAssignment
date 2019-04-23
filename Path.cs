@@ -37,7 +37,6 @@ namespace SwashSim_RouteAssign
             //Get one set of feasible path flow results
             List<XXE_DataStructures.PathData> PathFlowResults = Calculations.GetPathResults();
 
-            DisplayPathFlowDataGridView(PathFlowResults);
         }
 
         private void PathAssignmentOutputForSwashSim(List<XXE_DataStructures.PathData> PathFlowResults)
@@ -70,14 +69,6 @@ namespace SwashSim_RouteAssign
             return PathProb;
         }
            
-
-        private void DisplayPathFlowDataGridView(List<XXE_DataStructures.PathData> PathFlowResults)
-        {
-            UserEquilibriumResults myUEresultsForm = new UserEquilibriumResults(PathFlowResults);
-            myUEresultsForm.Show();
-        }
-
-
 
         public void OldCode(List<LinkData> links, List<NodeData> nodes)
         {
