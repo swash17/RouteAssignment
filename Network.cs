@@ -15,7 +15,7 @@ namespace SwashSim_RouteAssign
         public void SpecifyUserEquilibriumNetworkInput(List<LinkData> SwashSimLinks, List<NodeData> SwashSimNodes,XXE_DataStructures.NetworkData networkXXE, List<XXE_DataStructures.LinkData> linksXXE, List<XXE_DataStructures.ODdata> ODXXE)
         {
             NetworkSetup(networkXXE);
-            LinksSetup(linksXXE);
+            LinksSetup(linksXXE, SwashSimLinks);
             ODdemandSetup(ODXXE);
             PathsSetup();
         }
@@ -48,20 +48,24 @@ namespace SwashSim_RouteAssign
             bool match = false;
             for(int pathID =0; pathID < UEnetworkPathList.Count; pathID++)
             {
-                for(int i = 0; i<PathNodes.Count;i++)
+                if (PathNodes.Count == UEnetworkPathList[pathID].Count)
                 {
-                    if(PathNodes[i] != UEnetworkPathList[pathID][i])
+                    for (int i = 0; i < PathNodes.Count; i++)
                     {
-                        match = false;
+                        if (PathNodes[i] != UEnetworkPathList[pathID][i])
+                        {
+                            match = false;
+                            break;
+                        }
+                        match = true;
+                    }
+                    if (match == true)
+                    {
+                        PathNodesSwashSim = SwashSimPathLists[pathID];
                         break;
                     }
-                    match = true;
                 }
-                if(match == true)
-                {
-                    PathNodesSwashSim = SwashSimPathLists[pathID];
-                    break;
-                }
+                
             }
             return PathNodesSwashSim;
         }
@@ -80,18 +84,19 @@ namespace SwashSim_RouteAssign
             network.TimePeriodType = XXE_DataStructures.TimePeriod.Single;
         }
 
-        private void LinksSetup(List<XXE_DataStructures.LinkData> links)
+        private void LinksSetup(List<XXE_DataStructures.LinkData> links, List<LinkData> SwashSimLinks)
         {       
+            
             //UE links input for XXE
             links.Add(new XXE_DataStructures.LinkData());
-            links.Add(new XXE_DataStructures.LinkData(1, 9, 0.5, 0,1000, 40,"1", false));            
-            links.Add(new XXE_DataStructures.LinkData(2, 10, 0.5, 0, 1000, 40, "2", false));
-            links.Add(new XXE_DataStructures.LinkData(3, 11, 0.5, 0, 1000, 40, "3", false));
-            links.Add(new XXE_DataStructures.LinkData(4, 12, 0.5, 0, 1000, 40, "4", false));
-            links.Add(new XXE_DataStructures.LinkData(5, 9, 0.5, 0, 1000, 40, "5", false));
-            links.Add(new XXE_DataStructures.LinkData(6, 10, 0.5, 0, 1000, 40, "6", false));
-            links.Add(new XXE_DataStructures.LinkData(7, 11, 0.5, 0, 1000, 40, "7", false));
-            links.Add(new XXE_DataStructures.LinkData(8, 12, 0.5, 0, 1000, 40, "8", false));
+            links.Add(new XXE_DataStructures.LinkData(1, 9, 0.5, 0,4000, 40,"1", false));            
+            links.Add(new XXE_DataStructures.LinkData(2, 10, 0.5, 0, 4000, 40, "2", false));
+            links.Add(new XXE_DataStructures.LinkData(3, 11, 0.5, 0, 4000, 40, "3", false));
+            links.Add(new XXE_DataStructures.LinkData(4, 12, 0.5, 0, 4000, 40, "4", false));
+            links.Add(new XXE_DataStructures.LinkData(5, 9, 0.5, 0, 4000, 40, "5", false));
+            links.Add(new XXE_DataStructures.LinkData(6, 10, 0.5, 0, 4000, 40, "6", false));
+            links.Add(new XXE_DataStructures.LinkData(7, 11, 0.5, 0, 4000, 40, "7", false));
+            links.Add(new XXE_DataStructures.LinkData(8, 12, 0.5, 0, 4000, 40, "8", false));
             links.Add(new XXE_DataStructures.LinkData(9, 5, 0.5, 0, 1000, 40, "9", false));
             links.Add(new XXE_DataStructures.LinkData(9, 10, 2, 0, 1000, 40, "10", false));
             links.Add(new XXE_DataStructures.LinkData(9, 11, 2, 0, 1000, 40, "11", false));
@@ -116,16 +121,16 @@ namespace SwashSim_RouteAssign
             //OD demand input for XXE
             OD.Add(new XXE_DataStructures.ODdata());
             OD.Add(new XXE_DataStructures.ODdata(1, 2, 1000, 1000));
-            OD.Add(new XXE_DataStructures.ODdata(1, 3, 1000, 1000));
-            OD.Add(new XXE_DataStructures.ODdata(1, 4, 1000, 1000));
-            OD.Add(new XXE_DataStructures.ODdata(2, 1, 1000, 1000));
-            OD.Add(new XXE_DataStructures.ODdata(2, 3, 1000, 1000));
+            OD.Add(new XXE_DataStructures.ODdata(1, 3, 2000, 1000));
+            OD.Add(new XXE_DataStructures.ODdata(1, 4, 3000, 1000));
+            OD.Add(new XXE_DataStructures.ODdata(2, 1, 3000, 1000));
+            OD.Add(new XXE_DataStructures.ODdata(2, 3, 2000, 1000));
             OD.Add(new XXE_DataStructures.ODdata(2, 4, 1000, 1000));
             OD.Add(new XXE_DataStructures.ODdata(3, 1, 1000, 1000));
-            OD.Add(new XXE_DataStructures.ODdata(3, 2, 1000, 1000));
-            OD.Add(new XXE_DataStructures.ODdata(3, 4, 1000, 1000));
-            OD.Add(new XXE_DataStructures.ODdata(4, 1, 1000, 1000));
-            OD.Add(new XXE_DataStructures.ODdata(4, 2, 1000, 1000));
+            OD.Add(new XXE_DataStructures.ODdata(3, 2, 2000, 1000));
+            OD.Add(new XXE_DataStructures.ODdata(3, 4, 3000, 1000));
+            OD.Add(new XXE_DataStructures.ODdata(4, 1, 3000, 1000));
+            OD.Add(new XXE_DataStructures.ODdata(4, 2, 2000, 1000));
             OD.Add(new XXE_DataStructures.ODdata(4, 3, 1000, 1000));
         }
 

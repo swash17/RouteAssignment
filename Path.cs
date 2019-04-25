@@ -45,7 +45,7 @@ namespace SwashSim_RouteAssign
         {
             List<object[]> PathAssignmentObjectList = new List<object[]>();
             object[] PathAssignmentObject;
-            for (int path = 0; path < PathFlowResults.Count; path++)
+            for (int path = 1; path < PathFlowResults.Count; path++)
             {
                 PathAssignmentObject = new object[3];
                 PathAssignmentObject[0] = UEnetwork.DetermineEntryNode(PathFlowResults[path].OrigZone); //entry node
