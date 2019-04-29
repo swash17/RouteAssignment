@@ -10,7 +10,7 @@ namespace SwashSim_RouteAssign
     public class Network
     {
         List<List<int>> UEnetworkPathList = new List<List<int>>();
-        List<List<int>> SwashSimPathLists = new List<List<int>>();
+        List<List<uint>> SwashSimPathLists = new List<List<uint>>();
 
         public void SpecifyUserEquilibriumNetworkInput(List<LinkData> SwashSimLinks, List<NodeData> SwashSimNodes,XXE_DataStructures.NetworkData networkXXE, List<XXE_DataStructures.LinkData> linksXXE, List<XXE_DataStructures.ODdata> ODXXE)
         {
@@ -21,9 +21,9 @@ namespace SwashSim_RouteAssign
         }
 
 
-        public int DetermineEntryNode(int OrigZone)
+        public uint DetermineEntryNode(int OrigZone)
         {
-            int EntryNodeSwashSim = 0;
+            uint EntryNodeSwashSim = 0;
             switch (OrigZone)
             {
                 case 1:
@@ -42,9 +42,9 @@ namespace SwashSim_RouteAssign
             return EntryNodeSwashSim;
         }
 
-        public List<int> DeterminePathNodes(List<int> PathNodes)
+        public List<uint> DeterminePathNodes(List<int> PathNodes)
         {
-            List<int> PathNodesSwashSim = new List<int>();
+            List<uint> PathNodesSwashSim = new List<uint>();
             bool match = false;
             for(int pathID =0; pathID < UEnetworkPathList.Count; pathID++)
             {
@@ -88,50 +88,60 @@ namespace SwashSim_RouteAssign
         {       
             
             //UE links input for XXE
-            links.Add(new XXE_DataStructures.LinkData());
-            links.Add(new XXE_DataStructures.LinkData(1, 9, 0.5, 0,4000, 40,"1", false));            
-            links.Add(new XXE_DataStructures.LinkData(2, 10, 0.5, 0, 4000, 40, "2", false));
-            links.Add(new XXE_DataStructures.LinkData(3, 11, 0.5, 0, 4000, 40, "3", false));
-            links.Add(new XXE_DataStructures.LinkData(4, 12, 0.5, 0, 4000, 40, "4", false));
-            links.Add(new XXE_DataStructures.LinkData(5, 9, 0.5, 0, 4000, 40, "5", false));
-            links.Add(new XXE_DataStructures.LinkData(6, 10, 0.5, 0, 4000, 40, "6", false));
-            links.Add(new XXE_DataStructures.LinkData(7, 11, 0.5, 0, 4000, 40, "7", false));
-            links.Add(new XXE_DataStructures.LinkData(8, 12, 0.5, 0, 4000, 40, "8", false));
-            links.Add(new XXE_DataStructures.LinkData(9, 5, 0.5, 0, 1000, 40, "9", false));
-            links.Add(new XXE_DataStructures.LinkData(9, 10, 2, 0, 1000, 40, "10", false));
-            links.Add(new XXE_DataStructures.LinkData(9, 11, 2, 0, 1000, 40, "11", false));
-            links.Add(new XXE_DataStructures.LinkData(10, 6, 0.5, 0, 1000, 40, "12", false));
-            links.Add(new XXE_DataStructures.LinkData(10, 9, 2, 0, 1000, 40, "13", false));
-            links.Add(new XXE_DataStructures.LinkData(10, 12, 2, 0, 1000, 40, "14", false));
-            links.Add(new XXE_DataStructures.LinkData(11, 7, 0.5, 0, 1000, 40, "15", false));
-            links.Add(new XXE_DataStructures.LinkData(11, 9, 2, 0, 1000, 40, "16", false));
-            links.Add(new XXE_DataStructures.LinkData(11, 12, 2, 0, 1000, 40, "17", false));
-            links.Add(new XXE_DataStructures.LinkData(12, 8, 0.5, 0, 1000, 40, "18", false));
-            links.Add(new XXE_DataStructures.LinkData(12, 10, 2, 0, 1000, 40, "19", false));
-            links.Add(new XXE_DataStructures.LinkData(12, 11, 2, 0, 1000, 40, "20", false));
+            links.Add(new XXE_DataStructures.LinkData());          
+            links.Add(new XXE_DataStructures.LinkData(1, 9, 0.5, 0,2000, 60,"1",false));            
+            links.Add(new XXE_DataStructures.LinkData(2, 10, 0.5, 0, 2000, 60, "2", false));
+            links.Add(new XXE_DataStructures.LinkData(3, 11, 0.5, 0, 2000, 60, "3", false));
+            links.Add(new XXE_DataStructures.LinkData(4, 12, 0.5, 0, 2000, 60, "4", false));
+            links.Add(new XXE_DataStructures.LinkData(5, 9, 0.5, 0, 2000, 60, "5", false));
+            links.Add(new XXE_DataStructures.LinkData(6, 10, 0.5, 0, 2000, 60, "6", false));
+            links.Add(new XXE_DataStructures.LinkData(7, 11, 0.5, 0, 2000, 60, "7", false));
+            links.Add(new XXE_DataStructures.LinkData(8, 12, 0.5, 0, 2000, 60, "8", false));
+            links.Add(new XXE_DataStructures.LinkData(9, 5, 0.5, 0, 2000, 60, "9", false));
+            links.Add(new XXE_DataStructures.LinkData(9, 10, SwashSimLinks.First(i => i.Id == 416).Length, 0, 2000, SwashSimLinks.First(i => i.Id == 416).FreeFlowSpeed, "10", false));
+            links.Add(new XXE_DataStructures.LinkData(9, 11, SwashSimLinks.First(i => i.Id == 627).Length, 0, 2000, SwashSimLinks.First(i => i.Id == 627).FreeFlowSpeed, "11", false));
+            links.Add(new XXE_DataStructures.LinkData(10, 6, 0.5, 0, 2000, 60, "12", false));
+            links.Add(new XXE_DataStructures.LinkData(10, 9, SwashSimLinks.First(i => i.Id == 93).Length, 0, 2000, SwashSimLinks.First(i => i.Id == 93).FreeFlowSpeed, "13", false));
+            links.Add(new XXE_DataStructures.LinkData(10, 12, SwashSimLinks.First(i => i.Id == 1518).Length, 0, 2000, SwashSimLinks.First(i => i.Id == 1518).FreeFlowSpeed, "14", false));
+            links.Add(new XXE_DataStructures.LinkData(11, 7, 0.5, 0, 2000, 60, "15", false));
+            links.Add(new XXE_DataStructures.LinkData(11, 9, SwashSimLinks.First(i => i.Id == 285).Length, 0, 2000, SwashSimLinks.First(i => i.Id == 285).FreeFlowSpeed, "16", false));
+            links.Add(new XXE_DataStructures.LinkData(11, 12, SwashSimLinks.First(i => i.Id == 3024).Length, 0, 2000, SwashSimLinks.First(i => i.Id == 3024).FreeFlowSpeed, "17", false));
+            links.Add(new XXE_DataStructures.LinkData(12, 8, 0.5, 0, 2000, 60, "18", false));
+            links.Add(new XXE_DataStructures.LinkData(12, 10, SwashSimLinks.First(i => i.Id == 1914).Length, 0, 2000, SwashSimLinks.First(i => i.Id == 1914).FreeFlowSpeed, "19", false));
+            links.Add(new XXE_DataStructures.LinkData(12, 11, SwashSimLinks.First(i => i.Id == 1729).Length, 0, 2000, SwashSimLinks.First(i => i.Id == 1729).FreeFlowSpeed, "20", false));
             for(int n =1; n< links.Count; n++)
             {
-                links[n].Capacity[0] = 1000;
-                links[n].Capacity[1] = 1000;
+                links[n].Capacity[0] = 2000;
+                links[n].Capacity[1] = 2000;
             }
+        }
+
+        private float GetLinkLength(List<uint> Ids, List<LinkData> SwashSimLinks)
+        {
+            float Length = 0;
+            foreach(uint id in Ids)
+            {
+                Length+= SwashSimLinks.First(i => i.Id == id).Length;
+            }
+            return Length;
         }
 
         private void ODdemandSetup(List<XXE_DataStructures.ODdata> OD)
         {
             //OD demand input for XXE
             OD.Add(new XXE_DataStructures.ODdata());
-            OD.Add(new XXE_DataStructures.ODdata(1, 2, 1000, 1000));
-            OD.Add(new XXE_DataStructures.ODdata(1, 3, 2000, 1000));
-            OD.Add(new XXE_DataStructures.ODdata(1, 4, 3000, 1000));
-            OD.Add(new XXE_DataStructures.ODdata(2, 1, 3000, 1000));
-            OD.Add(new XXE_DataStructures.ODdata(2, 3, 2000, 1000));
-            OD.Add(new XXE_DataStructures.ODdata(2, 4, 1000, 1000));
-            OD.Add(new XXE_DataStructures.ODdata(3, 1, 1000, 1000));
-            OD.Add(new XXE_DataStructures.ODdata(3, 2, 2000, 1000));
-            OD.Add(new XXE_DataStructures.ODdata(3, 4, 3000, 1000));
-            OD.Add(new XXE_DataStructures.ODdata(4, 1, 3000, 1000));
-            OD.Add(new XXE_DataStructures.ODdata(4, 2, 2000, 1000));
-            OD.Add(new XXE_DataStructures.ODdata(4, 3, 1000, 1000));
+            OD.Add(new XXE_DataStructures.ODdata(1, 2, 4800, 1000));
+            OD.Add(new XXE_DataStructures.ODdata(1, 3, 100, 1000));
+            OD.Add(new XXE_DataStructures.ODdata(1, 4, 100, 1000));
+            OD.Add(new XXE_DataStructures.ODdata(2, 1, 100, 1000));
+            OD.Add(new XXE_DataStructures.ODdata(2, 3, 100, 1000));
+            OD.Add(new XXE_DataStructures.ODdata(2, 4, 100, 1000));
+            OD.Add(new XXE_DataStructures.ODdata(3, 1, 100, 1000));
+            OD.Add(new XXE_DataStructures.ODdata(3, 2, 100, 1000));
+            OD.Add(new XXE_DataStructures.ODdata(3, 4, 100, 1000));
+            OD.Add(new XXE_DataStructures.ODdata(4, 1, 100, 1000));
+            OD.Add(new XXE_DataStructures.ODdata(4, 2, 100, 1000));
+            OD.Add(new XXE_DataStructures.ODdata(4, 3, 100, 1000));
         }
 
         private void PathsSetup()
@@ -163,30 +173,30 @@ namespace SwashSim_RouteAssign
             UEnetworkPathList.Add(new List<int> { 12, 10, 9, 11 });
 
             //SwashSim network paths
-            SwashSimPathLists.Add(new List<int> { 8, 7, 4, 16, 13, 12, 802 });
-            SwashSimPathLists.Add(new List<int> { 8, 7, 6, 27, 30, 24, 19, 14, 13, 12, 802 });
-            SwashSimPathLists.Add(new List<int> { 8, 7, 6, 27, 26, 25, 804 });
-            SwashSimPathLists.Add(new List<int> { 8, 7, 4, 16, 15, 18, 17, 29, 26, 25, 804 });
-            SwashSimPathLists.Add(new List<int> { 8, 7, 4, 16, 15, 18, 23, 22, 803 });
-            SwashSimPathLists.Add(new List<int> { 8, 7, 6, 27, 30, 24, 23, 22, 803 });
-            SwashSimPathLists.Add(new List<int> { 11, 10, 9, 3, 2, 1, 801 });
-            SwashSimPathLists.Add(new List<int> { 11, 10, 15, 18, 17, 29, 28, 5, 2, 1, 801 });
-            SwashSimPathLists.Add(new List<int> { 11, 10, 15, 18, 17, 29, 26, 25, 804 });
-            SwashSimPathLists.Add(new List<int> { 11, 10, 9, 3, 6, 27, 26, 25, 804 });
-            SwashSimPathLists.Add(new List<int> { 11, 10, 15, 18, 23, 22, 803 });
-            SwashSimPathLists.Add(new List<int> { 11, 10, 9, 3, 6, 27, 30, 24, 23, 22, 803 });
-            SwashSimPathLists.Add(new List<int> { 32, 31, 28, 5, 2, 1, 801 });
-            SwashSimPathLists.Add(new List<int> { 32, 31, 30, 24, 19, 14, 9, 3, 2, 1, 801 });
-            SwashSimPathLists.Add(new List<int> { 32, 31, 30, 24, 19, 14, 13, 12, 802 });
-            SwashSimPathLists.Add(new List<int> { 32, 31, 28, 5, 4, 16, 13, 12, 802 });
-            SwashSimPathLists.Add(new List<int> { 32, 31, 30, 24, 23, 22, 803 });
-            SwashSimPathLists.Add(new List<int> { 32, 31, 28, 5, 4, 16, 15, 18, 23, 22, 803 });
-            SwashSimPathLists.Add(new List<int> { 21, 20, 17, 29, 28, 5, 2, 1, 801 });
-            SwashSimPathLists.Add(new List<int> { 21, 20, 19, 14, 9, 3, 2, 1, 801 });
-            SwashSimPathLists.Add(new List<int> { 21, 20, 19, 14, 13, 12, 802 });
-            SwashSimPathLists.Add(new List<int> { 21, 20, 17, 29, 28, 5, 4, 16, 13, 12, 802 });
-            SwashSimPathLists.Add(new List<int> { 21, 20, 17, 29, 26, 25, 804 });
-            SwashSimPathLists.Add(new List<int> { 21, 20, 19, 14, 9, 3, 6, 27, 26, 25, 804 });
+            SwashSimPathLists.Add(new List<uint> { 8, 7, 4, 16, 13, 12, 802 });
+            SwashSimPathLists.Add(new List<uint> { 8, 7, 6, 27, 30, 24, 19, 14, 13, 12, 802 });
+            SwashSimPathLists.Add(new List<uint> { 8, 7, 6, 27, 26, 25, 804 });
+            SwashSimPathLists.Add(new List<uint> { 8, 7, 4, 16, 15, 18, 17, 29, 26, 25, 804 });
+            SwashSimPathLists.Add(new List<uint> { 8, 7, 4, 16, 15, 18, 23, 22, 803 });
+            SwashSimPathLists.Add(new List<uint> { 8, 7, 6, 27, 30, 24, 23, 22, 803 });
+            SwashSimPathLists.Add(new List<uint> { 11, 10, 9, 3, 2, 1, 801 });
+            SwashSimPathLists.Add(new List<uint> { 11, 10, 15, 18, 17, 29, 28, 5, 2, 1, 801 });
+            SwashSimPathLists.Add(new List<uint> { 11, 10, 15, 18, 17, 29, 26, 25, 804 });
+            SwashSimPathLists.Add(new List<uint> { 11, 10, 9, 3, 6, 27, 26, 25, 804 });
+            SwashSimPathLists.Add(new List<uint> { 11, 10, 15, 18, 23, 22, 803 });
+            SwashSimPathLists.Add(new List<uint> { 11, 10, 9, 3, 6, 27, 30, 24, 23, 22, 803 });
+            SwashSimPathLists.Add(new List<uint> { 32, 31, 28, 5, 2, 1, 801 });
+            SwashSimPathLists.Add(new List<uint> { 32, 31, 30, 24, 19, 14, 9, 3, 2, 1, 801 });
+            SwashSimPathLists.Add(new List<uint> { 32, 31, 30, 24, 19, 14, 13, 12, 802 });
+            SwashSimPathLists.Add(new List<uint> { 32, 31, 28, 5, 4, 16, 13, 12, 802 });
+            SwashSimPathLists.Add(new List<uint> { 32, 31, 30, 24, 23, 22, 803 });
+            SwashSimPathLists.Add(new List<uint> { 32, 31, 28, 5, 4, 16, 15, 18, 23, 22, 803 });
+            SwashSimPathLists.Add(new List<uint> { 21, 20, 17, 29, 28, 5, 2, 1, 801 });
+            SwashSimPathLists.Add(new List<uint> { 21, 20, 19, 14, 9, 3, 2, 1, 801 });
+            SwashSimPathLists.Add(new List<uint> { 21, 20, 19, 14, 13, 12, 802 });
+            SwashSimPathLists.Add(new List<uint> { 21, 20, 17, 29, 28, 5, 4, 16, 13, 12, 802 });
+            SwashSimPathLists.Add(new List<uint> { 21, 20, 17, 29, 26, 25, 804 });
+            SwashSimPathLists.Add(new List<uint> { 21, 20, 19, 14, 9, 3, 6, 27, 26, 25, 804 });
         }
     }
 }

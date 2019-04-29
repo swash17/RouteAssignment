@@ -56,9 +56,9 @@ namespace SwashSim_RouteAssign
             return PathAssignmentObjectList;
         }
 
-        private double CalculatePathProbability(int pathID,  List<XXE_DataStructures.PathData> PathFlowResults)
+        private float CalculatePathProbability(int pathID,  List<XXE_DataStructures.PathData> PathFlowResults)
         {
-            double PathProb = new double();
+            float PathProb = new float();
             double OrigZoneTotalVolume = 0;
             foreach(XXE_DataStructures.PathData pathResult in PathFlowResults)
             {
@@ -67,7 +67,7 @@ namespace SwashSim_RouteAssign
                     OrigZoneTotalVolume += pathResult.Volume;
                 }
             }
-            PathProb = Math.Round(PathFlowResults[pathID].Volume / OrigZoneTotalVolume,2);
+            PathProb = (float)Math.Round(PathFlowResults[pathID].Volume / OrigZoneTotalVolume,6);
             return PathProb;
         }
            
