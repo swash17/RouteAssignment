@@ -10,7 +10,7 @@ namespace SwashSim_RouteAssign
     public class Network
     {
         List<List<int>> UEnetworkPathList = new List<List<int>>();
-        List<List<uint>> SwashSimPathLists = new List<List<uint>>();
+        List<List<ushort>> SwashSimPathLists = new List<List<ushort>>();
 
         public void SpecifyUserEquilibriumNetworkInput(List<LinkData> SwashSimLinks, List<NodeData> SwashSimNodes,XXE_DataStructures.NetworkData networkXXE, List<XXE_DataStructures.LinkData> linksXXE, List<XXE_DataStructures.ODdata> ODXXE)
         {
@@ -21,9 +21,9 @@ namespace SwashSim_RouteAssign
         }
 
 
-        public uint DetermineEntryNode(int OrigZone)
+        public ushort DetermineEntryNode(int OrigZone)
         {
-            uint EntryNodeSwashSim = 0;
+            ushort EntryNodeSwashSim = 0;
             switch (OrigZone)
             {
                 case 1:
@@ -42,9 +42,9 @@ namespace SwashSim_RouteAssign
             return EntryNodeSwashSim;
         }
 
-        public List<uint> DeterminePathNodes(List<int> PathNodes)
+        public List<ushort> DeterminePathNodes(List<int> PathNodes)
         {
-            List<uint> PathNodesSwashSim = new List<uint>();
+            List<ushort> PathNodesSwashSim = new List<ushort>();
             bool match = false;
             for(int pathID =0; pathID < UEnetworkPathList.Count; pathID++)
             {
@@ -173,30 +173,30 @@ namespace SwashSim_RouteAssign
             UEnetworkPathList.Add(new List<int> { 12, 10, 9, 11 });
 
             //SwashSim network paths
-            SwashSimPathLists.Add(new List<uint> { 8, 7, 4, 16, 13, 12, 802 });
-            SwashSimPathLists.Add(new List<uint> { 8, 7, 6, 27, 30, 24, 19, 14, 13, 12, 802 });
-            SwashSimPathLists.Add(new List<uint> { 8, 7, 6, 27, 26, 25, 804 });
-            SwashSimPathLists.Add(new List<uint> { 8, 7, 4, 16, 15, 18, 17, 29, 26, 25, 804 });
-            SwashSimPathLists.Add(new List<uint> { 8, 7, 4, 16, 15, 18, 23, 22, 803 });
-            SwashSimPathLists.Add(new List<uint> { 8, 7, 6, 27, 30, 24, 23, 22, 803 });
-            SwashSimPathLists.Add(new List<uint> { 11, 10, 9, 3, 2, 1, 801 });
-            SwashSimPathLists.Add(new List<uint> { 11, 10, 15, 18, 17, 29, 28, 5, 2, 1, 801 });
-            SwashSimPathLists.Add(new List<uint> { 11, 10, 15, 18, 17, 29, 26, 25, 804 });
-            SwashSimPathLists.Add(new List<uint> { 11, 10, 9, 3, 6, 27, 26, 25, 804 });
-            SwashSimPathLists.Add(new List<uint> { 11, 10, 15, 18, 23, 22, 803 });
-            SwashSimPathLists.Add(new List<uint> { 11, 10, 9, 3, 6, 27, 30, 24, 23, 22, 803 });
-            SwashSimPathLists.Add(new List<uint> { 32, 31, 28, 5, 2, 1, 801 });
-            SwashSimPathLists.Add(new List<uint> { 32, 31, 30, 24, 19, 14, 9, 3, 2, 1, 801 });
-            SwashSimPathLists.Add(new List<uint> { 32, 31, 30, 24, 19, 14, 13, 12, 802 });
-            SwashSimPathLists.Add(new List<uint> { 32, 31, 28, 5, 4, 16, 13, 12, 802 });
-            SwashSimPathLists.Add(new List<uint> { 32, 31, 30, 24, 23, 22, 803 });
-            SwashSimPathLists.Add(new List<uint> { 32, 31, 28, 5, 4, 16, 15, 18, 23, 22, 803 });
-            SwashSimPathLists.Add(new List<uint> { 21, 20, 17, 29, 28, 5, 2, 1, 801 });
-            SwashSimPathLists.Add(new List<uint> { 21, 20, 19, 14, 9, 3, 2, 1, 801 });
-            SwashSimPathLists.Add(new List<uint> { 21, 20, 19, 14, 13, 12, 802 });
-            SwashSimPathLists.Add(new List<uint> { 21, 20, 17, 29, 28, 5, 4, 16, 13, 12, 802 });
-            SwashSimPathLists.Add(new List<uint> { 21, 20, 17, 29, 26, 25, 804 });
-            SwashSimPathLists.Add(new List<uint> { 21, 20, 19, 14, 9, 3, 6, 27, 26, 25, 804 });
+            SwashSimPathLists.Add(new List<ushort> { 8, 7, 4, 16, 13, 12, 802 });
+            SwashSimPathLists.Add(new List<ushort> { 8, 7, 6, 27, 30, 24, 19, 14, 13, 12, 802 });
+            SwashSimPathLists.Add(new List<ushort> { 8, 7, 6, 27, 26, 25, 804 });
+            SwashSimPathLists.Add(new List<ushort> { 8, 7, 4, 16, 15, 18, 17, 29, 26, 25, 804 });
+            SwashSimPathLists.Add(new List<ushort> { 8, 7, 4, 16, 15, 18, 23, 22, 803 });
+            SwashSimPathLists.Add(new List<ushort> { 8, 7, 6, 27, 30, 24, 23, 22, 803 });
+            SwashSimPathLists.Add(new List<ushort> { 11, 10, 9, 3, 2, 1, 801 });
+            SwashSimPathLists.Add(new List<ushort> { 11, 10, 15, 18, 17, 29, 28, 5, 2, 1, 801 });
+            SwashSimPathLists.Add(new List<ushort> { 11, 10, 15, 18, 17, 29, 26, 25, 804 });
+            SwashSimPathLists.Add(new List<ushort> { 11, 10, 9, 3, 6, 27, 26, 25, 804 });
+            SwashSimPathLists.Add(new List<ushort> { 11, 10, 15, 18, 23, 22, 803 });
+            SwashSimPathLists.Add(new List<ushort> { 11, 10, 9, 3, 6, 27, 30, 24, 23, 22, 803 });
+            SwashSimPathLists.Add(new List<ushort> { 32, 31, 28, 5, 2, 1, 801 });
+            SwashSimPathLists.Add(new List<ushort> { 32, 31, 30, 24, 19, 14, 9, 3, 2, 1, 801 });
+            SwashSimPathLists.Add(new List<ushort> { 32, 31, 30, 24, 19, 14, 13, 12, 802 });
+            SwashSimPathLists.Add(new List<ushort> { 32, 31, 28, 5, 4, 16, 13, 12, 802 });
+            SwashSimPathLists.Add(new List<ushort> { 32, 31, 30, 24, 23, 22, 803 });
+            SwashSimPathLists.Add(new List<ushort> { 32, 31, 28, 5, 4, 16, 15, 18, 23, 22, 803 });
+            SwashSimPathLists.Add(new List<ushort> { 21, 20, 17, 29, 28, 5, 2, 1, 801 });
+            SwashSimPathLists.Add(new List<ushort> { 21, 20, 19, 14, 9, 3, 2, 1, 801 });
+            SwashSimPathLists.Add(new List<ushort> { 21, 20, 19, 14, 13, 12, 802 });
+            SwashSimPathLists.Add(new List<ushort> { 21, 20, 17, 29, 28, 5, 4, 16, 13, 12, 802 });
+            SwashSimPathLists.Add(new List<ushort> { 21, 20, 17, 29, 26, 25, 804 });
+            SwashSimPathLists.Add(new List<ushort> { 21, 20, 19, 14, 9, 3, 6, 27, 26, 25, 804 });
         }
     }
 }
