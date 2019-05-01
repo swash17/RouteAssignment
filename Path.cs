@@ -38,6 +38,7 @@ namespace SwashSim_RouteAssign
             List<XXE_DataStructures.PathData> PathFlowResults = Calculations.GetPathResults();
             //Return path assignment results to SwashSim
             PathAssignmentObjectListForSwashSim = PathAssignmentOutputForSwashSim(PathFlowResults);
+            string test = "";
             return PathAssignmentObjectListForSwashSim;
         }
 

@@ -11,12 +11,16 @@ namespace SwashSim_RouteAssign
     {
         List<List<int>> UEnetworkPathList = new List<List<int>>();
         List<List<ushort>> SwashSimPathLists = new List<List<ushort>>();
-
+        FileIO MyFileIO = new FileIO();
         public void SpecifyUserEquilibriumNetworkInput(List<LinkData> SwashSimLinks, List<NodeData> SwashSimNodes,XXE_DataStructures.NetworkData networkXXE, List<XXE_DataStructures.LinkData> linksXXE, List<XXE_DataStructures.ODdata> ODXXE)
         {
             NetworkSetup(networkXXE);
             LinksSetup(linksXXE, SwashSimLinks);
             ODdemandSetup(ODXXE);
+            string fileName = System.Windows.Forms.Application.StartupPath + "\\ODinputs.xml";
+            //MyFileIO.WriteODdemandFile(fileName,ODXXE);
+            //ODXXE.Add(new XXE_DataStructures.ODdata());
+            //MyFileIO.ReadODdemandFile(fileName, ODXXE);
             PathsSetup();
         }
 
@@ -126,22 +130,41 @@ namespace SwashSim_RouteAssign
             return Length;
         }
 
+       
         private void ODdemandSetup(List<XXE_DataStructures.ODdata> OD)
         {
             //OD demand input for XXE
             OD.Add(new XXE_DataStructures.ODdata());
-            OD.Add(new XXE_DataStructures.ODdata(1, 2, 4800, 1000));
-            OD.Add(new XXE_DataStructures.ODdata(1, 3, 100, 1000));
-            OD.Add(new XXE_DataStructures.ODdata(1, 4, 100, 1000));
-            OD.Add(new XXE_DataStructures.ODdata(2, 1, 100, 1000));
-            OD.Add(new XXE_DataStructures.ODdata(2, 3, 100, 1000));
-            OD.Add(new XXE_DataStructures.ODdata(2, 4, 100, 1000));
-            OD.Add(new XXE_DataStructures.ODdata(3, 1, 100, 1000));
-            OD.Add(new XXE_DataStructures.ODdata(3, 2, 100, 1000));
-            OD.Add(new XXE_DataStructures.ODdata(3, 4, 100, 1000));
-            OD.Add(new XXE_DataStructures.ODdata(4, 1, 100, 1000));
-            OD.Add(new XXE_DataStructures.ODdata(4, 2, 100, 1000));
-            OD.Add(new XXE_DataStructures.ODdata(4, 3, 100, 1000));
+            OD.Add(new XXE_DataStructures.ODdata(1, 2, 1000, 1000));
+            OD.Add(new XXE_DataStructures.ODdata(1, 3, 1000, 1000));
+            OD.Add(new XXE_DataStructures.ODdata(1, 4, 1000, 1000));
+            OD.Add(new XXE_DataStructures.ODdata(2, 1, 1000, 1000));
+            OD.Add(new XXE_DataStructures.ODdata(2, 3, 1000, 1000));
+            OD.Add(new XXE_DataStructures.ODdata(2, 4, 1000, 1000));
+            OD.Add(new XXE_DataStructures.ODdata(3, 1, 1000, 1000));
+            OD.Add(new XXE_DataStructures.ODdata(3, 2, 1000, 1000));
+            OD.Add(new XXE_DataStructures.ODdata(3, 4, 1000, 1000));
+            OD.Add(new XXE_DataStructures.ODdata(4, 1, 1000, 1000));
+            OD.Add(new XXE_DataStructures.ODdata(4, 2, 1000, 1000));
+            OD.Add(new XXE_DataStructures.ODdata(4, 3, 1000, 1000));
+        }
+
+        private void Scenario1OD(List<XXE_DataStructures.ODdata> OD)
+        {
+            //OD demand input for XXE
+            OD.Add(new XXE_DataStructures.ODdata());
+            OD.Add(new XXE_DataStructures.ODdata(1, 2, 1000, 1000));
+            OD.Add(new XXE_DataStructures.ODdata(1, 3, 0, 0));
+            OD.Add(new XXE_DataStructures.ODdata(1, 4, 0, 0));
+            OD.Add(new XXE_DataStructures.ODdata(2, 1, 50, 50));
+            OD.Add(new XXE_DataStructures.ODdata(2, 3, 50, 50));
+            OD.Add(new XXE_DataStructures.ODdata(2, 4, 50, 50));
+            OD.Add(new XXE_DataStructures.ODdata(3, 1, 50, 50));
+            OD.Add(new XXE_DataStructures.ODdata(3, 2, 50, 50));
+            OD.Add(new XXE_DataStructures.ODdata(3, 4, 50, 50));
+            OD.Add(new XXE_DataStructures.ODdata(4, 1, 50, 50));
+            OD.Add(new XXE_DataStructures.ODdata(4, 2, 50, 50));
+            OD.Add(new XXE_DataStructures.ODdata(4, 3, 50, 50));
         }
 
         private void PathsSetup()
