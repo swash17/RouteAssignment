@@ -16,11 +16,11 @@ namespace SwashSim_RouteAssign
         {
             NetworkSetup(networkXXE);
             LinksSetup(linksXXE, SwashSimLinks);
-            ODdemandSetup(ODXXE);
+            //ODdemandSetup(ODXXE);
             string fileName = System.Windows.Forms.Application.StartupPath + "\\ODinputs.xml";
             //MyFileIO.WriteODdemandFile(fileName,ODXXE);
-            //ODXXE.Add(new XXE_DataStructures.ODdata());
-            //MyFileIO.ReadODdemandFile(fileName, ODXXE);
+            ODXXE.Add(new XXE_DataStructures.ODdata());
+            MyFileIO.ReadODdemandFile(fileName, ODXXE);
             PathsSetup();
         }
 
@@ -115,8 +115,8 @@ namespace SwashSim_RouteAssign
             links.Add(new XXE_DataStructures.LinkData(12, 11, SwashSimLinks.First(i => i.Id == 1729).Length, 0, 2000, SwashSimLinks.First(i => i.Id == 1729).FreeFlowSpeed, "20", false));
             for(int n =1; n< links.Count; n++)
             {
-                links[n].Capacity[0] = 2000;
-                links[n].Capacity[1] = 2000;
+                links[n].Capacity[0] = 3000;
+                links[n].Capacity[1] = 3000;
             }
         }
 
