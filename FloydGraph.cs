@@ -50,7 +50,7 @@ namespace SwashSim_RouteAssign
                 return;
             FindPath(i, (ushort)k);
             result.Add((ushort)k);
-            FindPath((ushort)k, j);           
+            FindPath((ushort)k, j);
         }
 
 

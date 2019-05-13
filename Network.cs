@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using SwashSim_Network;
+
 
 namespace SwashSim_RouteAssign
 {
@@ -12,6 +10,7 @@ namespace SwashSim_RouteAssign
         List<List<int>> UEnetworkPathList = new List<List<int>>();
         List<List<ushort>> SwashSimPathLists = new List<List<ushort>>();
         FileIO MyFileIO = new FileIO();
+
         public void SpecifyUserEquilibriumNetworkInput(List<LinkData> SwashSimLinks, List<NodeData> SwashSimNodes,XXE_DataStructures.NetworkData networkXXE, List<XXE_DataStructures.LinkData> linksXXE, List<XXE_DataStructures.ODdata> ODXXE)
         {
             NetworkSetup(networkXXE);
@@ -50,7 +49,7 @@ namespace SwashSim_RouteAssign
         {
             List<ushort> PathNodesSwashSim = new List<ushort>();
             bool match = false;
-            for(int pathID =0; pathID < UEnetworkPathList.Count; pathID++)
+            for (int pathID = 0; pathID < UEnetworkPathList.Count; pathID++)
             {
                 if (PathNodes.Count == UEnetworkPathList[pathID].Count)
                 {
@@ -69,7 +68,6 @@ namespace SwashSim_RouteAssign
                         break;
                     }
                 }
-                
             }
             return PathNodesSwashSim;
         }
@@ -89,8 +87,7 @@ namespace SwashSim_RouteAssign
         }
 
         private void LinksSetup(List<XXE_DataStructures.LinkData> links, List<LinkData> SwashSimLinks)
-        {       
-            
+        {            
             //UE links input for XXE
             links.Add(new XXE_DataStructures.LinkData());          
             links.Add(new XXE_DataStructures.LinkData(1, 9, 0.5, 0,2000, 60,"1",false));            
@@ -113,6 +110,7 @@ namespace SwashSim_RouteAssign
             links.Add(new XXE_DataStructures.LinkData(12, 8, 0.5, 0, 2000, 60, "18", false));
             links.Add(new XXE_DataStructures.LinkData(12, 10, SwashSimLinks.First(i => i.Id == 1914).Length, 0, 2000, SwashSimLinks.First(i => i.Id == 1914).FreeFlowSpeed, "19", false));
             links.Add(new XXE_DataStructures.LinkData(12, 11, SwashSimLinks.First(i => i.Id == 1729).Length, 0, 2000, SwashSimLinks.First(i => i.Id == 1729).FreeFlowSpeed, "20", false));
+
             for(int n =1; n< links.Count; n++)
             {
                 links[n].Capacity[0] = 3000;
